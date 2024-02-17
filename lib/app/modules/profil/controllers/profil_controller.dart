@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:belajar_getx/app/providers/api.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilController extends GetxController {
   var isLoading = true.obs;

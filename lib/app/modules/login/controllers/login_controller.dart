@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import '../../../providers/api.dart';
 
 class LoginController extends GetxController {
+  //TODO: Implement LoginController
   final formKey = GlobalKey<FormState>();
 
   var email = ''.obs;
@@ -22,24 +23,29 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
-    try {
-      var response = await _performLogin();
-      var responseBody = json.decode(response.body);
+  try {
+    print('Email: ${email.value}');
+    print('Password: ${password.value}');
+    
+    var response = await _performLogin();
+    var responseBody = json.decode(response.body);
 
-      if (response.statusCode == 200 && responseBody['token'] != null) {
-        // Login successful
-        _saveUserData(responseBody);
-        Get.offAllNamed('/bottom-menu'); // Navigate to the home page
-      } else {
-        // Login failed, handle the error
-        Get.snackbar('Error', 'Login failed. ${responseBody['message']}');
-      }
-    } catch (e) {
-      // Handle other errors
-      print('Error during login: $e');
-      Get.snackbar('Error', 'An error occurred during login.');
+    if (response.statusCode == 200 && responseBody['token'] != null) {
+      // Login successful
+      _saveUserData(responseBody);
+      print('Token: ${responseBody['token']}');
+      Get.offAllNamed('/bottom-menu'); // Navigate to the home page
+    } else {
+      // Login failed, handle the error
+      Get.snackbar('Error', 'Login failed. ${responseBody['message']}');
     }
+  } catch (e) {
+    // Handle other errors
+    print('Error during login: $e');
+    Get.snackbar('Error', 'An error occurred during login.');
   }
+}
+
 
   Future<http.Response> _performLogin() async {
     var apiUrl = '/login';
